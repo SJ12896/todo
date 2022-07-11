@@ -1,4 +1,4 @@
-package com.sj.todo.domain;
+package sj.todo.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,15 +19,15 @@ class todoTest {
                 .endDate(endDate)
                 .howManyWeeks(6)
                 .dayOfWeek(dayOfWeek)
-                .interval(1)
+                .cycle(1)
                 .build();
 
         Period period2 = Period.builder()
                 .startDate(startDate)
                 .endDate(endDate)
                 .howManyWeeks(123)
-                .day(16)
-                .interval(33)
+                .setDay(16)
+                .cycle(33)
                 .build();
         // when
         todo = Todo.createTodo("title", true, 23, period2);

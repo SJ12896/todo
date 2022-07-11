@@ -1,4 +1,4 @@
-package com.sj.todo.domain;
+package sj.todo.domain;
 
 import lombok.*;
 

@@ -1,36 +1,41 @@
-package com.sj.todo.sevice;
+package sj.todo.service;
 
-import com.sj.todo.domain.DayOfWeek;
-import com.sj.todo.domain.Period;
-import com.sj.todo.domain.Todo;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+import sj.todo.domain.DayOfWeek;
+import sj.todo.domain.Period;
+import sj.todo.domain.Todo;
+import sj.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
-
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+@SpringBootTest
+@Transactional
+public class TodoServiceTest {
 
-class todoServiceTest {
-
+    @Autowired TodoRepository todoRepository;
     @Autowired TodoService todoService;
-    // @Autowired TodoRepository todoRepository;
-    @Autowired EntityManager em;
+    @Autowired
+    EntityManager em;
 
     @Test
     public void createTodoTest() throws Exception {
         // given
         Period period = createBuild();
 
+//        Long periodId = periodService.addPeriod();
+
         // when
-        Long todoId = todoService.addTodo("title", true, 23, period);
+        Long todoId = todoService.addTodo("title", true, 23, period.getId());
 
         // then
-        // Todo getTodo = todoRepository.findOne(todoId);
-
-        // Assertions.assertEquals("title", getTodo.getTitle());
+         Todo getTodo = todoRepository.findOne(todoId);
+         Assertions.assertEquals("title", getTodo.getTitle());
 
     }
 
@@ -45,7 +50,7 @@ class todoServiceTest {
                 .endDate(endDate)
                 .howManyWeeks(6)
                 .dayOfWeek(dayOfWeek)
-                .interval(1)
+                .cycle(1)
                 .build();
     }
 

@@ -1,7 +1,6 @@
-package com.sj.todo.domain;
+package sj.todo.domain;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
