@@ -12,7 +12,7 @@ public class TodoRepository {
 
     private final EntityManager em;
 
-    public Todo findOne(Long id) {
+    public Todo findById(Long id) {
         return em.find(Todo.class, id);
     }
 

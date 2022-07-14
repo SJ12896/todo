@@ -1,10 +1,14 @@
 package sj.todo.service;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import sj.todo.domain.DayOfWeek;
-import sj.todo.domain.Period;
 import sj.todo.domain.Todo;
 import sj.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Assertions;
@@ -14,38 +18,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 
-@SpringBootTest
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
+
+// @SpringBootTest
 @Transactional
+@ExtendWith(MockitoExtension.class)
 public class TodoServiceTest {
 
-    @Autowired TodoRepository todoRepository;
-    @Autowired TodoService todoService;
-    @Autowired
-    EntityManager em;
+    @Mock
+    TodoRepository todoRepository;
+    @InjectMocks
+    TodoService todoService;
+
+//    @BeforeEach
+//    void initCase() {
+//        todoService = new TodoService(todoRepository);
+//    }
 
     @Test
     public void createTodoTest() throws Exception {
         // given
-        Period period = createBuild();
-
-//        Long periodId = periodService.addPeriod();
-
+        Todo todo = createTodo();
         // when
-        Long todoId = todoService.addTodo("title", true, 23, period.getId());
+        //Long todoId = todoService.addTodo(todo);
+        // when(todoRepository.save(any(Todo.class))).then(returnFirstArg());
 
         // then
-         Todo getTodo = todoRepository.findOne(todoId);
-         Assertions.assertEquals("title", getTodo.getTitle());
-
+//        given(todoRepository.findOne(todoId)).willReturn(todo);
+//
+//        Assertions.assertEquals("title", getTodo.getTitle());
     }
 
-    private Period createBuild() {
+    private Todo createTodo() {
 
         LocalDate startDate = LocalDate.of(2022, 01, 01);
         LocalDate endDate = LocalDate.of(2022, 12, 12);
         DayOfWeek dayOfWeek = new DayOfWeek(false, false, false, false, false, false, false);
 
-        return Period.builder()
+        return Todo.builder()
+                .title("title")
+                .isDone(false)
+                .howLong(1)
                 .startDate(startDate)
                 .endDate(endDate)
                 .howManyWeeks(6)

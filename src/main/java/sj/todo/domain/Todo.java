@@ -1,14 +1,16 @@
 package sj.todo.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Todo {
 
     @Id
@@ -17,22 +19,21 @@ public class Todo {
     private Long id;
 
     private String title;
-    private boolean isDone;
+    private boolean isDone = false;
 //    private String icon;
 //    private String color;
 
     private int howLong;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="period_id")
-    private Period period;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
+    private int howManyWeeks;
 
-    public static Todo createTodo(String title, boolean isDone, int howLong, Period period) {
-        Todo todo = new Todo();
-        todo.title = title;
-        todo.isDone = isDone;
-        todo.howLong = howLong;
-        todo.period = period;
-        return todo;
-    }
+    @Embedded
+    private DayOfWeek dayOfWeek ;  // 특정 요일 주기로
+
+    private int cycle;  // 간격
+
 }
