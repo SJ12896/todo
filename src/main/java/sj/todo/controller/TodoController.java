@@ -17,7 +17,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<TodoDto> CreateTodo(@RequestBody TodoDto todoDto) {
+    public ResponseEntity<TodoDto> createTodo(@RequestBody TodoDto todoDto) {
         Long id = todoService.addTodo(todoDto);
         return ResponseEntity.ok(todoService.findOne(id));
     }

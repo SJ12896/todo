@@ -10,6 +10,7 @@ import sj.todo.dto.TodoDto;
 import sj.todo.mapper.TodoMapper;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +24,7 @@ class TodoControllerTest {
     @Test
     public void createTodoTest() {
 
-        ResponseEntity<TodoDto> responseTodo = todoController.CreateTodo(createTodoDto());
+        ResponseEntity<TodoDto> responseTodo = todoController.createTodo(createTodoDto());
         TodoDto createdTodo = responseTodo.getBody();
         TodoDto todo = todoController.getTodo(createdTodo.getId()).getBody();
         assertEquals(createdTodo.getTitle(), todo.getTitle());

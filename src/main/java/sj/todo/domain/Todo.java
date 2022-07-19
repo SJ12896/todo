@@ -20,8 +20,6 @@ public class Todo {
 
     private String title;
     private boolean isDone = false;
-//    private String icon;
-//    private String color;
 
     private int howLong;
 
@@ -35,5 +33,9 @@ public class Todo {
     private DayOfWeek dayOfWeek ;  // 특정 요일 주기로
 
     private int cycle;  // 간격
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="MEMBER_ID")
+    private Member member;
 
 }
